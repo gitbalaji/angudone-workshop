@@ -9,4 +9,5 @@ pom.xml
 /.env
 *.log
 .nrepl*
-
+.idea
+site.db.mv.db
