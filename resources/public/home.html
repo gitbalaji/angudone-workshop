@@ -11,13 +11,8 @@
   <script src="js/jquery-2.1.1.js"></script>
   <script src="js/bootstrap.js"></script>
   <script src="js/main.js"></script>
-  <script>
-   angular.module("myApp", []).run(function($http){
-     window.http = $http;
-   });
- </script>
 </head>
-<body ng-app="myApp">
+<body ng-app="myApp" ng-strict-di>
   <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
       <div class="navbar-header">
@@ -40,7 +35,55 @@
     <div class="starter-template">
       <h1>Angudone</h1>
       <div class="lead">
-        This is where we can play!
+        <div ng-controller="TodosCtrl">
+        <input type="text" ng-model="firstName" />
+        <br/>
+        <h3>{{firstName}}</h3>
+        </div>
+        <br/>
+        <input type="checkbox" ng-model="gm.designation.architect" ng-controller="checkBoxController as gm" ng-change="gm.change()" value="Architect" checked='true'/> 
+        Architect
+        <br>
+       <input type="checkbox" ng-model="vm.designation.developer" ng-controller="checkBoxController as vm" ng-change="vm.change()" value="Developer"/> 
+       Developer
+       <br>
+      </div>
+      <div ng-controller="arrayController as vm">
+        <input type="text" ng-model="searchText"/>
+      <ul>
+        <div ng-repeat="todo in (vm.todos | filter:{text:searchText})">
+        <table cellpadding="50">
+        <tr>
+        <td>
+        <input type="checkbox" ng-click="vm.markDone(todo)" 
+        ng-checked="todo.done"/>
+        </td>
+        <td>
+          <h4>
+          {{todo.text}}
+          </h4>
+        </td>
+        <td>
+          <h4>
+          {{todo.text | reverse:"Ha!"}}
+          </h4>
+        </td>        
+        </tr>
+        </table>
+        </div>
+      </ul>
+      <form novalidate name="someForm">
+        <input type="text" ng-model="vm.item.text" 
+               placeholder = "I want to ..." required/>
+         <button ng-click="vm.addTodo(vm.item)" 
+         ng-disabled="someForm.$invalid">
+         Add
+         </button>      
+      </form>
+      <br/>
+      <h4>
+      {{vm.todos | json}}
+      </h4>
       </div>
     </div>
   </div>
